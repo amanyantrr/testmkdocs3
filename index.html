@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>My Docs</title>
+  
+
+  <link rel="shortcut icon" href="./img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="./css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "None";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = "/";
+  </script>
+  
+  <script src="./js/jquery-2.1.1.min.js"></script>
+  <script src="./js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="./js/highlight.pack.js"></script>
+  <script src="./js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> My Docs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href=".">Home</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#sw-startup-guide-for-vayu-3g">SW startup guide for Vayu 3G</a></li>
+                
+                    <li><a class="toctree-l4" href="#overview">Overview</a></li>
+                
+                    <li><a class="toctree-l4" href="#hardware-configurations">Hardware Configurations</a></li>
+                
+                    <li><a class="toctree-l4" href="#getting-started">Getting started</a></li>
+                
+                    <li><a class="toctree-l4" href="#understanding-the-ttyusb-ports-on-bbb-capes">Understanding the TTYUSB ports on BBB capes</a></li>
+                
+                    <li><a class="toctree-l4" href="#faq">FAQ</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">My Docs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="sw-startup-guide-for-vayu-3g">SW startup guide for Vayu 3G</h1>
+<p><br>
+For a quick guide to starting with the Vayu 3G cape's HW, see 
+<a href="http://www.yantrr.com/w/images/0/06/Leaflet_for_Vayu_3GHP_Cape.pdf">Leaflet for 3G cape.</a></p>
+<p>Below, we describe how to set up the 3G capes and the associated software. </p>
+<h2 id="overview">Overview</h2>
+<p>Data connection is established based on PPP protocols. Wvdial is mainly used to configure the dialup settings. For setting up various settings for PPP connection and establishing a data connection on these capes follow the link to the wiki</p>
+<ul>
+<li>Way to setup the Vayu 2G Capes</li>
+<li>How to read location and coarse time as NMEA-0183 message from the serial UART ttyO4 port</li>
+<li>How to write wvdial conf files for any network</li>
+<li>Sample wvdial.conf file for 
+<a href="http://www.yantrr.com/wiki/Sample_wvdial.conf_file#Sample_Wvdial_conf_file_for_AT.26T_3G">AT&amp;T</a>
+ and 
+<a href="http://www.yantrr.com/wiki/Sample_wvdial.conf_file#Sample_Wvdial_conf_file_for_TMOBILE_2G">T-Mobile USA</a></li>
+</ul>
+<p>For using the Vayu-3G-A/Vayu-3GP-A Cape, please ensure that you have the following :</p>
+<p>1) USB drivers for the modem (21f5:2012) installed in kernel
+2) PPS drivers enabled in kernel, required if GPS module is present.
+3) VAYU Device tree overlay file is properly configured. </p>
+<p>You can either download kernel patches containing the same to use with your existing images or you can download our prebuilt MicroSD card image or EMMC flasher image.</p>
+<p>All the images and files and extra support on software can be found here: 
+<a href="http://www.yantrr.com/wiki/Vayu_Cape_SW_images_and_drivers">Vayu_Cape_SW_images_and_drivers</a></p>
+<p><code>Note :</code> On most beaglebones, there is a known bug with USB hotplug for using USB HUB with Beaglebone black host port. So to efficiently be able to use the modem, follow the Power on Modem section properly. An alternative easier approach is to keep the second host port on cape populated with a usb device.</p>
+<h2 id="hardware-configurations">Hardware Configurations</h2>
+<p>The 3G/WCDMA modem has following interfaces available on the Cape: 
+<a href="http://www.yantrr.com/w/images/0/06/Leaflet_for_Vayu_3GHP_Cape.pdf">Leaflet_3G modem</a></p>
+<ol>
+<li>
+<p>Mini USB B Device port on Cape (P9): It has to be connected to USB host port on Beaglebone Black.</p>
+</li>
+<li>
+<p>SMA connector for GSM/WCDMA antenna(P7): Antenna is connected here.</p>
+</li>
+<li>
+<p>LED D2 (5V Power LED of Cape) : This LED indicates that the Cape is powered on with 5V and GSM/WCDMA modem is also powered.</p>
+</li>
+<li>
+<p>LED D4 (SIGNAL LED) : This LED is the SIGNAL LED for the GSM/WCDMA modem whose various blinking states 
+denote the different states of the WCDMA Modem.</p>
+</li>
+<li>
+<p>GPIO45 (ON/OFF PIN) : It is the GPIO connected to Power ON/OFF pin of GSM/WCDMA Modem.</p>
+</li>
+<li>
+<p>GPIO60 (Hard Reset Pin) : It is the GPIO connected to Reset pin of GSM/WCDMA Modem.</p>
+</li>
+<li>
+<p>S1 (ON/OFF switch) : This push button switch is connected to Power ON/OFF pin of GSM/WCDMA modem.</p>
+</li>
+<li>
+<p>S2 (RESET switch) : This push button switch is connected to Hard Reset pin of GSM/WCDMA modem.</p>
+</li>
+<li>
+<p><strong>GPIO45 and GPIO60 should be set high at all instances for the GSM/WCDMA modem to be available for use.</strong></p>
+</li>
+<li>
+<p><strong>USB drivers for the modem (21f5:2012, 21f5:2009) should be included in the kernel. We provide pre-compiled images with USB drivers included in the kernel.</strong></p>
+</li>
+</ol>
+<h2 id="getting-started">Getting started</h2>
+<p><strong>Seting up the system</strong></p>
+<ol>
+<li>
+<p>Place a mini sim in the sim card slot and connect a GSM antenna to the SMA connector.</p>
+</li>
+<li>
+<p>Mount the cape on BBB carefully.</p>
+</li>
+<li>
+<p>Connect the extra usb cable provided with the cape between Host port on Beaglebone Black and miniUSB device port on Cape.</p>
+</li>
+<li>
+<p>To avoid the bug on Beaglebone black with external USB hubs, please connect a USB device (pendrive etc) to extra host port on the cape.</p>
+</li>
+<li>
+<p>Ensuring that the power jumper on the cape is in its place, power up the setup using a 5V DC adapter(min 2.5A) to barrel jack. D2 LED on the cape will glow alongwith LEDs on the Beaglebone black.</p>
+</li>
+</ol>
+<p><code>Note :</code> Before proceeding further ensure D2 LED is glowing properly. Make sure that the adapter being used is of proper rating and has been connected properly. Further check for the presence of the power jumper(#12 on leaflet).</p>
+<p><code>Note :</code> Do not try to power up using USB cable alone. Always power up system with a DC adapter. Also while disconnecting power, USB cable should be removed before the DC adapter.</p>
+<p><img alt="SIM-card" src="./img/Sim.jpg" /></p>
+<p><strong>Hardware setup</strong></p>
+<p><img alt="first" src="./img/first.jpg" />      <img alt="sec" src="./img/sec.jpg" />        <img alt="third" src="./img/thi.jpg" /></p>
+<p>After establishing that the power on the cape is proper, log in to the BBB plus cape setup using any of the following method :</p>
+<ol>
+<li>
+<p>Through USB client.</p>
+</li>
+<li>
+<p>Through Ethernet cable. </p>
+</li>
+</ol>
+<p><img alt="four" src="./img/four.jpg" /></p>
+<p>Now login by using the SSH command. Make sure to login as root only so that all the special priviledges are available.</p>
+<p>1) Through USB client. Use the command :</p>
+<pre><code>    ssh -l root 192.168.7.2
+</code></pre>
+<p>to login onto the system. Default password is <em>root</em>.</p>
+<p>2) Through ethernet cable.</p>
+<p>The ip address of the ethernet cable should be known. Use that with the ssh command to esatblish a connection :</p>
+<pre><code>    ssh -l root $address
+</code></pre>
+<p>Default Username and password is <em>root</em>.</p>
+<p>In Yantrr Precompiled images, IP address is <strong>192.168.1.150</strong></p>
+<p>After logging into the BBB plus cape system, export and set the GPIO45 and GPIO60 high by using:</p>
+<pre><code>    cd /sys/class/gpio/
+    echo 45 &gt; export
+    echo 60 &gt; export
+    cd gpio45
+    echo “high” &gt; direction
+    cd ..
+    cd gpio60 
+    echo “high” &gt; direction
+</code></pre>
+<p><code>NOTE :</code> In precompiled image, for ease of use these regular commands for use with the GPIOs have been created as functions : pinexp, setout, setin, pinread.</p>
+<pre><code>    pinexp 45
+    pinexp 60
+    setout 45 high
+    setout 60 high
+</code></pre>
+<p><strong>Power On Modem</strong></p>
+<p>The Modem can be powered on by providing a low level pulse at ON/OFF Pin for 3-4s when the module is off. It can be achieved by either using the push button switch S1 or GPIO45.</p>
+<pre><code>    cd /sys/class/gpio/
+    echo 45 &gt; export 
+    cd gpio45
+    echo "high" &gt; direction
+    sleep 4
+    echo "low" &gt; direction
+    sleep 4
+    echo "high" &gt; direction
+</code></pre>
+<ul>
+<li>After some time, LED D4 should start blinking as to indicate modem has turned on. 
+(Note : In some of 3G modules LED functionality is not enabled by the manufacturer, so the LED D4 might not blink)</li>
+</ul>
+<p><code>Note :</code> In cases where a usb device was not connected to extra host port on cape, please connect the provided USB cable after turning on the modem.</p>
+<p>Check that modem is visible on the USB bus by:</p>
+<pre><code>    lsusb
+    Bus 001 Device 002: ID 0424:2412 Standard Microsystems Corp.
+    Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+    Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+    Bus 001 Device 034: ID 21f5:2012 
+    Bus 001 Device 007: ID 046d:0825 Logitech, Inc. Webcam C270
+</code></pre>
+<p>Assigning driver on the USB modem (Not needed if using pre-built images)</p>
+<pre><code>    modprobe usbserial vendor=0x21f5 product=0x2012
+
+    lsusb
+    Bus 001 Device 002: ID 0424:2412 Standard Microsystems Corp.
+    Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+    Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+    Bus 001 Device 034: ID 21f5:2012 
+    Bus 001 Device 007: ID 046d:0825 Logitech, Inc. Webcam C270
+</code></pre>
+<ul>
+<li>
+<p>System messages (logs) show what happened when modem was turned on and its drivers were assigned after applying modprobe usbserial. For pre-compiled image, log messages are similar. </p>
+<pre><code>dmesg | grep -i usb
+
+usb 1-1.1: New USB device found, idVendor=21f5, idProduct=2012
+usb 1-1.1: New USB device strings: Mfr=3, Product=2, SerialNumber=4
+usb 1-1.1: Product: StrongRising Technologies
+usb 1-1.1: Manufacturer: Modem
+usb 1-1.1: SerialNumber: 000000000002
+usb 1-1.1: usb_probe_device
+usb 1-1.1: configuration #1 chosen from 1 choice
+usb 1-1.1: adding 1-1.1:1.0 (config #1, interface 0)
+usbserial_generic 1-1.1:1.0: usb_probe_interface
+usbserial_generic 1-1.1:1.0: usb_probe_interface - got id
+usbserial_generic 1-1.1:1.0: The "generic" usb-serial driver is only for testing and one-off prototypes.
+usbserial_generic 1-1.1:1.0: Tell linux-usb@vger.kernel.org to add your device to a proper driver.
+usbserial_generic 1-1.1:1.0: generic converter detected
+usb 1-1.1: generic converter now attached to ttyUSB0
+usb 1-1.1: adding 1-1.1:1.1 (config #1, interface 1)
+usbserial_generic 1-1.1:1.1: usb_probe_interface
+usbserial_generic 1-1.1:1.1: usb_probe_interface - got id
+usbserial_generic 1-1.1:1.1: The "generic" usb-serial driver is only for testing and one-off prototypes.
+usbserial_generic 1-1.1:1.1: Tell linux-usb@vger.kernel.org to add your device to a proper driver.
+usbserial_generic 1-1.1:1.1: generic converter detected
+usb 1-1.1: g'''eneric converter now attached to ttyUSB1'''
+usb 1-1.1: adding 1-1.1:1.2 (config #1, interface 2)
+usbserial_generic 1-1.1:1.2: usb_probe_interface
+usbserial_generic 1-1.1:1.2: usb_probe_interface - got id
+usbserial_generic 1-1.1:1.2: The "generic" usb-serial driver is only for testing and one-off prototypes.
+usbserial_generic 1-1.1:1.2: Tell linux-usb@vger.kernel.org to add your device to a proper driver.
+usbserial_generic 1-1.1:1.2: generic converter detected
+usb 1-1.1: '''generic converter now attached to ttyUSB2'''
+</code></pre>
+</li>
+<li>
+<p><strong>It is recommended to add a proper driver for the modem in kernel. The generic driver is not reliable.</strong></p>
+</li>
+</ul>
+<p><code>Note :</code> If the modem is not visible after these steps or any issues are faced while initializing the modem please contact Yantrr Support (support@yantrr.com) with the above log messages (dmesg | grep –I usb or /var/log/syslog).</p>
+<h2 id="understanding-the-ttyusb-ports-on-bbb-capes">Understanding the TTYUSB ports on BBB capes</h2>
+<p>Vayu 3G cape enumerate 3 different usb ports</p>
+<pre><code>    /dev/ttyUSB0  /dev/ttyUSB1  /dev/ttyUSB2
+</code></pre>
+<ul>
+<li>ttyUSB0 is data port &amp; command for modem, use this for the WVDIAL conf or PPP</li>
+<li>ttyUSB1 is the diag port for the Firmware upgrade</li>
+<li>ttyUSB2 is the AT CMD port only.</li>
+</ul>
+<p><code>Note :</code> These ttyUSB ports are only created if proper drivers are present or when “modprobe usbserial” command is issued. Pre compiled images with drivers are available on the Yantrr wiki page. </p>
+<p><code>Note :</code> Both ttyUSB0 and ttyUSB2 take the AT commands, but ttyUSB0 port is also a Data communications port so for all intended purposes of issuing AT commands use ttyUSB2 port(PCUI port).</p>
+<p><strong>Power Off Modem</strong></p>
+<p>The modem can be powered off by providing a low level pulse at ON/OFF pin for 3-4s when the module is On. It can be achieved by either using the</p>
+<p>push button switch S1 or GPIO45.</p>
+<pre><code>    cd /sys/class/gpio/
+    echo 45 &gt; export
+    cd gpio45
+    echo "high" &gt; direction
+    sleep 4
+    echo "low" &gt; direction
+    sleep 4
+    echo "high" &gt; direction
+</code></pre>
+<p>Modem can also be turned off by issuing following AT commands on port /dev/ttyUSB2</p>
+<pre><code>    AT+ZPWROFF
+</code></pre>
+<p><strong>Soft Resetting the Modem</strong></p>
+<p>Steps -</p>
+<p>1.Power Off the Modem.</p>
+<p>2.Wait for 1-2s atleast.</p>
+<p>3.Power on the modem.</p>
+<p><strong>Hard resetting the modem</strong></p>
+<p>There might arise situations where modem does not seem to be responding to any commands issued on AT commands port or it cannot be turned on/off. In such scenarios, issue hard reset to the modem. It can be done by either toggling Switch S2 for atleast 100ms or pulling GPIO60 low for 1s and then setting it high again.</p>
+<pre><code>    cd /sys/class/gpio/
+    cd gpio60
+    echo "low" &gt; direction
+    sleep 1
+    echo "high" &gt; direction
+</code></pre>
+<p><code>Note :</code> Please use hard reset conservatively. Soft reset should be preferred under most conditions.</p>
+<p><strong>VAYU 3GHx-D(ZTE Modem)</strong></p>
+<p>VAYU 3GHx-D capes have ZTE MG3732 modem. Their functionality is essentially the same with some minor changes. For more information on ZTE MG3732 modem and a quick reference guide 
+<a href="http://www.yantrr.com/wiki/ZTE_modem">click here</a></p>
+<p><strong>AT Commands Manual</strong></p>
+<p>The AT Command for the 3G Module can be downloaded from here : 
+<a href="https://www.dropbox.com/s/g6dz78scv5s6638/SCV_WCDMA%20Module%20AT%20Command.pdf">WCDMA AT Commands Manual</a>
+<br>
+<br></p>
+<p><br></p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Ques) LED D2 on the cape is not glowing after powering up the Beaglebone black plus cape setup?</strong></p>
+<p><strong>Ans)</strong></p>
+<p>1) Ensure setup was powered up initially using a DC adapter (5V, 2.5A min) only.</p>
+<p>2) Ensure the power jumper (#12 on leaflet) is present.</p>
+<p><strong>Ques) Can the BBB plus Cape setup be powered up using USB cable too?</strong></p>
+<p><strong>Ans)</strong> USB cable alone cannot provide sufficient power(only500mA max) to drive the Beaglebone Black and Cape together, so it is possible that BBB will not boot properly and the Modem may not even power up.</p>
+<p>Use a DC power adapter of 2.5A,5V rating at barrel jack to properly boot Beaglebone black with our cape.</p>
+<p>Connect USB cable for SSH login purposes only.</p>
+<p><strong>Ques) Modem is not visible in the list of devices after issuing “lsusb” command on the Debian wheezy shell?</strong></p>
+<p><strong>Ans)</strong> Beaglebone Black USB host port has a bug when used with external USB hubs.</p>
+<p>1) After powering up the BBB plus cape setup, ensure modem was turned on by either using the switch S1 or controlling GPIO 45.</p>
+<p>2) Then a USB cable has to be connected between USB host port on BBB and mini-USB device port on the cape. Now issuing a “lsusb” command should show Modem (21f5:2012) among list of devices.</p>
+<p>3) Also ensure that GPIO45 and GPIO60 are set high in output mode after BBB boots up.</p>
+<p><code>Note :</code> If you face issues detecting Modem after following above steps, then alternately connect USB cable between BBB and Cape before power up and attach a USB device(pendrive etc) to the extra USB host port available on the cape. Then, Power up the BBB plus cape setup and after proper bootup, turn on the Modem.</p>
+<p><strong>Ques) Modem is visible in list of devices shown by “lsusb” but no “ttyUSB” ports are created?</strong></p>
+<p><strong>Ans)</strong> </p>
+<p>1) Make sure you are logged in as root.</p>
+<p>2)Ensure the Debian Wheezy or the OS used has drivers installed for the modem. Pre-compiled Images with drivers included are available on Yantrr Wiki page.</p>
+<p>3) Alternately, issue the following command to initialize drivers for the Modem ports.</p>
+<pre><code>sudo modprobe usbserial vendor=0x21f5 product=0x2012
+</code></pre>
+<p><code>Note :</code> This will create generic ports for the Modem, but it is advised to include drivers in the kernel.</p>
+<p><strong>Ques) How to issue AT commands to the modem?</strong></p>
+<p><strong>Ans)</strong> Both ttyUSB0 and ttyUSB2 take the AT commands, but ttyUSB0 port is also a Data communications port so for all intended purposes of issuing AT commands use ttyUSB2 port(PCUI port).</p>
+<p><strong>Ques) What are some common useful AT commands to ensure 3G modem is working?</strong></p>
+<p><strong>Ans)</strong> Some common AT commnds :</p>
+<p>1) AT = Output “OK” if modem is on.</p>
+<p>2) AT+CPIN? = Outputs the status whether sim card is detected or not.</p>
+<p>3) AT+CREG? = To check if sim card is registered or not.</p>
+<p>4) AT+COPS? = Operator selection.</p>
+<p>5) AT+CSQ = Outputs Signal strength.</p>
+<p><strong>Ques) What is the function of each LED? What do they denote and how do they function under different conditions?</strong></p>
+<p><strong>Ans)</strong> D2 is power Led of Cape, which denotes the 5V power being provided to Cape and for the Modem.</p>
+<p>D7 is 3.3V power LED from the Beaglebone Black. This denotes 3.3V power for GPS module and other ICs on Cape.</p>
+<p>D5 is 1 PPS Fix led for the GPS module. It will blink at the rate of 1Hz, when GPS module has got its fix.</p>
+<p>D4 is Netlight/Signal Led for the 2G/3G Modem. It has different behaviours depending on the state of Modem. For 3G modems, it is an optional feature. Ask for this feature while ordering.</p>
+<p>D3 is Status LED for the GPRS Modem. It gives the indication whether the GPRS Modem is on or not. It glows continuously when the Modem is Turned ON and stays off when the Modem is turned OFF.</p>
+<p><strong>Ques) What are the functions of the different Switches?</strong></p>
+<p><strong>Ans)</strong> S1 is ON/OFF push button switch for the Modem.</p>
+<p>S2 is Hard Reset push Button switch for the Modem.</p>
+<p>S3 is Reset push button switch for the GPS module.</p>
+<p>S4 is 2 position DIP switch for specifying address for the EEPROM IC of cape on I2C2 bus of Beaglebone Black. </p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 0.15.3
+Build Date UTC : 2016-07-19 14:54:16.813608
+-->
